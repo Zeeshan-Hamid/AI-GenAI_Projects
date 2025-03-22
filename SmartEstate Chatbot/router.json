@@ -1,0 +1,201 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Zeeshan. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -420,
+        100
+      ],
+      "id": "5a5c6bf3-7050-4fc9-94d7-76d378e94136",
+      "name": "When chat message received",
+      "webhookId": "0b72e49d-8553-4640-a08d-c1c6d31f1fd7"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        220
+      ],
+      "id": "c3bff582-8986-4115-93ad-e8950aab7c9d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "SKKhQdniDYUn4Dw2",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        220
+      ],
+      "id": "62b9a324-265d-4ccb-9b28-086d001e5913",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "name": "Meeting_scheduling_Agent",
+        "workflowId": {
+          "__rl": true,
+          "value": "wXX6oqmNCQ7g5na2",
+          "mode": "list",
+          "cachedResultName": "Meeting scheduling agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Schedule meeting": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Schedule_meeting', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Schedule meeting"
+          ],
+          "schema": [
+            {
+              "id": "Schedule meeting",
+              "displayName": "Schedule meeting",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        220
+      ],
+      "id": "5141bb50-7a54-4ef0-909a-a3c7cb13a0fb",
+      "name": "Meeting scheduling"
+    },
+    {
+      "parameters": {
+        "name": "Properties_info",
+        "workflowId": {
+          "__rl": true,
+          "value": "QLVta3fqJdO5sPDG",
+          "mode": "list",
+          "cachedResultName": "Properties Information Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        220
+      ],
+      "id": "53c5f36f-290c-432e-a212-0b33281241f3",
+      "name": "Properties Information Agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=<Context>\nYou are a supervisor agent in a real estate agency. You are the main point of contact for user queries. Your job is to interpret the user's intent and route tasks to the appropriate specialized agents. You never perform the tasks yourself — you only manage task delegation and response integration. You interact with users like a persuasive and enthusiastic real estate professional who knows how to make every property sound like a great opportunity.\n</Context>\n\n<Tools>\n- The Meeting Scheduling Agent — responsible for managing user meetings and booking property viewings on Google Calendar.\n- The Properties Information Agent — responsible for retrieving and answering questions about available properties, including location, features, pricing, and other related details.\n</Tools>\n\n<Notes>\n- The current date and time is: {{ $now }}\n</Notes>\n\n<Rules>\n- If the user’s query is related to properties (e.g., available listings, features, pricing, location), route it to the **Properties Information Agent**.\n- If the user asks to schedule a meeting, route it to the **Meeting Scheduling Agent**.\n- If the user shows interest in any property (e.g., says they like it, want to see it, ask deeper questions or they like it), prompt them to set up a property viewing and route the scheduling task to the **Meeting Scheduling Agent**.\n- Do not answer property-related questions yourself — always use the **Properties Agent**.\n- Do not schedule meetings yourself — always use the **Meeting Scheduling Agent**.\n</Rules>\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -108,
+        0
+      ],
+      "id": "029b8772-4b4b-4eb9-bde8-0ca4accf6ed3",
+      "name": "Supervisor"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Supervisor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Supervisor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Supervisor",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meeting scheduling": {
+      "ai_tool": [
+        [
+          {
+            "node": "Supervisor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Properties Information Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Supervisor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "261a615d8e3c1a6ebd37efb3ef410963aaaee58fc6ae84e8de0d02228e3324f6"
+  }
+}

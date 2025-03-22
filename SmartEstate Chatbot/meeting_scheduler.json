@@ -1,0 +1,212 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {
+          "maxTokens": 1200,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        540
+      ],
+      "id": "1baf9e5e-de02-4594-9c2d-a1be50c11727",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "SKKhQdniDYUn4Dw2",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "zeeshanhamid17@gmail.com",
+          "mode": "list",
+          "cachedResultName": "zeeshanhamid17@gmail.com"
+        },
+        "start": "={{ $fromAI('start_date') }}",
+        "end": "={{ $fromAI('end_date') }}",
+        "additionalFields": {
+          "description": "={{ $fromAI('Description', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -100,
+        540
+      ],
+      "id": "b78c7547-5191-4e87-b13e-3ddaacadf870",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4JupuJtKuDClAzkZ",
+          "name": "Google Calendar account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "zeeshanhamid17@gmail.com",
+          "mode": "list",
+          "cachedResultName": "zeeshanhamid17@gmail.com"
+        },
+        "timeMin": "={{ $fromAI('start_time') }}",
+        "timeMax": "={{ $fromAI('end_time') }}",
+        "options": {
+          "timezone": {
+            "__rl": true,
+            "value": "Asia/Karachi",
+            "mode": "list",
+            "cachedResultName": "Asia/Karachi"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        20,
+        540
+      ],
+      "id": "975e8dc9-dbaf-496b-9a72-2cb88c2ce94c",
+      "name": "Slot availability checker",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4JupuJtKuDClAzkZ",
+          "name": "Google Calendar account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        140,
+        540
+      ],
+      "id": "0899dca0-4cbe-404b-b26a-0083b2512eb2",
+      "name": "Gmail",
+      "webhookId": "664f1048-580c-4567-9ad8-f45b78486027",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "owXwwHhvPwfKE7ej",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -440,
+        320
+      ],
+      "id": "fb31c5f7-b561-4e34-b137-631909b3bbff",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "=You are a proactive and helpful AI assistant responsible for scheduling meetings on the user's Google Calendar and sending a confirmation email via Gmail using the available tools.\n\nTask Flow:\n\n1. Request Meeting Details\nWhen the user asks to schedule a meeting, politely prompt them to provide the following information:\n\nDate\n\nTime\n\nPurpose of the meeting\n\nEmail of the user\n\n2. Check Availability\nUse the Slot Availability Checker Tool to verify whether the requested time slot is available.\n\nIf the slot is available: proceed to scheduling.\n\nIf the slot is unavailable: inform the user and ask them to suggest a different time. Repeat the process until a suitable time is found.\n\n3. Schedule the Meeting\nOnce an available time slot is confirmed, use the Google Calendar Tool to schedule the meeting. Ensure:\n\nThe correct date and time are selected\n\nThe meeting purpose is clearly stated\n\nAll calendar fields are accurately completed\n\n4. Send Confirmation Email\nAfter scheduling the meeting:\n\nAsk the user for their email address if it has not already been provided.\n\nOnce the email is available, use the Gmail Tool to send a meeting confirmation email.\n\nThe email should be well-written and professional, and must include all relevant meeting details such as:\n\nDate\n\nTime\n\nPurpose\n\nGoogle Calendar event link\n\n5. Final Confirmation\nConfirm with the user that the meeting has been scheduled and that a confirmation email has been sent to their provided address.\n\nTone\nMaintain a clear, polite, and professional tone throughout the interaction. Ensure all communication is structured, user-friendly, and accurate.\nToday's date is  \n{{ DateTime.now().setZone('Asia/Karachi').toFormat('yyyy-MM-dd HH:mm:ss') }}"
+        }
+      },
+      "id": "27ebc403-3e90-468c-8581-a1b7cfabd208",
+      "name": "Meeting Scheduling Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -128,
+        320
+      ],
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Meeting Scheduling Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "Meeting Scheduling Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slot availability checker": {
+      "ai_tool": [
+        [
+          {
+            "node": "Meeting Scheduling Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Meeting Scheduling Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Meeting Scheduling Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "261a615d8e3c1a6ebd37efb3ef410963aaaee58fc6ae84e8de0d02228e3324f6"
+  }
+}

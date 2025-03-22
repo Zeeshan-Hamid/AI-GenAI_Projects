@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estate - Find Your Dream Home</title>
+    
+    <!-- Link tag for CSS or other resources -->
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .navbar-brand span {
+            color: var(--secondary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/800') center/cover no-repeat;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline-light {
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: -80px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .featured-property {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+        
+        .featured-property:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .property-img {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .property-img img {
+            transition: transform 0.5s;
+        }
+        
+        .featured-property:hover .property-img img {
+            transform: scale(1.1);
+        }
+        
+        .property-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .property-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            color: #6c757d;
+        }
+        
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/api/placeholder/1920/600') center/cover no-repeat;
+            padding: 100px 0;
+            color: white;
+        }
+        
+        .agent-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .agent-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .agent-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .agent-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .agent-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .testimonial-content:before {
+            content: '\201C';
+            font-size: 5rem;
+            color: #eee;
+            position: absolute;
+            left: -20px;
+            top: -20px;
+            z-index: -1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .author-info {
+            line-height: 1.2;
+        }
+        
+        .author-name {
+            font-weight: 700;
+        }
+        
+        .author-role {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .feature-item {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(26, 188, 156, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .footer-heading:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+        
+        .social-links li {
+            margin-right: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding: 20px 0;
+            background-color: #233140;
+            color: #bdc3c7;
+            text-align: center;
+        }
+        
+        /* Additional styles for form elements */
+        .form-control {
+            height: 50px;
+            border-radius: 5px;
+        }
+        
+        .form-select {
+            height: 50px;
+            border-radius: 5px;
+        }
+        
+        /* Chat widget positioning */
+        .n8n-chat-widget {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-container {
+                margin-top: -60px;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .hero {
+                height: 60vh;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .search-container {
+                margin-top: 20px;
+                border-radius: 0;
+            }
+            
+            .section-title:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .section-title {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">Smart<span>Estate</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Agents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="btn btn-primary" href="#">List Your Property</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find Your Dream Home With Us</h1>
+                <p>We help you find the perfect property that meets all your needs and fits your budget.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="btn btn-primary">Explore Properties</a>
+                    <a href="#" class="btn btn-outline-light">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container search-container">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Property Type</label>
+                <select class="form-select">
+                    <option selected>All Types</option>
+                    <option>Apartment</option>
+                    <option>House</option>
+                    <option>Villa</option>
+                    <option>Commercial</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Location</label>
+                <select class="form-select">
+                    <option selected>All Locations</option>
+                    <option>New York</option>
+                    <option>Los Angeles</option>
+                    <option>Chicago</option>
+                    <option>Miami</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Price Range</label>
+                <select class="form-select">
+                    <option selected>Any Price</option>
+                    <option>$100k - $300k</option>
+                    <option>$300k - $500k</option>
+                    <option>$500k - $1M</option>
+                    <option>$1M+</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn btn-primary w-100">Search Properties</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section class="py-5 mt-4">
+        <div class="container">
+            <h2 class="section-title">Featured Properties</h2>
+            <div class="row">
+                <!-- Property 1 -->
+                <div class="col-md-4">
+                    <div class="featured-property">
+                        <div class="property-img">
+                            <img src="/api/placeholder/600/400" alt="Modern Apartment" class="img-fluid w-100 h-100 object-fit-cover">
+                            <div class="property-tag">For Sale</div>
+                        </div>
+                        <div class="p-4">
+                            <h4>Modern Apartment in Downtown</h4>
+                            <div class="property-price mb-2">$450,000</div>
+                            <div class="property-location mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>123 Park Avenue, New York
+                            </div>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed me-2"></i>3 Beds</span>
+                                <span><i class="fas fa-bath me-2"></i>2 Baths</span>
+                                <span><i class="fas fa-ruler-combined me-2"></i>1,200 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property 2 -->
+                <div class="col-md-4">
+                    <div class="featured-property">
+                        <div class="property-img">
+                            <img src="/api/placeholder/600/400" alt="Luxury Villa" class="img-fluid w-100 h-100 object-fit-cover">
+                            <div class="property-tag">For Sale</div>
+                        </div>
+                        <div class="p-4">
+                            <h4>Luxury Villa with Pool</h4>
+                            <div class="property-price mb-2">$1,250,000</div>
+                            <div class="property-location mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>456 Ocean Drive, Miami
+                            </div>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed me-2"></i>5 Beds</span>
+                                <span><i class="fas fa-bath me-2"></i>4 Baths</span>
+                                <span><i class="fas fa-ruler-combined me-2"></i>3,500 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property 3 -->
+                <div class="col-md-4">
+                    <div class="featured-property">
+                        <div class="property-img">
+                            <img src="/api/placeholder/600/400" alt="Family Home" class="img-fluid w-100 h-100 object-fit-cover">
+                            <div class="property-tag">For Rent</div>
+                        </div>
+                        <div class="p-4">
+                            <h4>Spacious Family Home</h4>
+                            <div class="property-price mb-2">$3,500/month</div>
+                            <div class="property-location mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>789 Maple Street, Chicago
+                            </div>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed me-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath me-2"></i>3 Baths</span>
+                                <span><i class="fas fa-ruler-combined me-2"></i>2,400 sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">View All Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Why Choose SmartEstate</h2>
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h4>Wide Range of Properties</h4>
+                        <p>We offer an extensive selection of residential and commercial properties to suit every need and budget.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h4>Best Market Prices</h4>
+                        <p>Our deep market knowledge ensures you get the best value whether you're buying, selling, or renting.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Trusted by Thousands</h4>
+                        <p>With over 15 years of experience, we've helped thousands of clients find their perfect property.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Find Your Dream Home?</h2>
+            <p class="mb-5 lead">Let us guide you through the process of finding the perfect property that meets all your requirements.</p>
+            <a href="#" class="btn btn-primary btn-lg">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Meet Our Agents -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title">Meet Our Agents</h2>
+            <div class="row">
+                <!-- Agent 1 -->
+                <div class="col-md-4">
+                    <div class="agent-card">
+                        <div class="agent-img">
+                            <img src="/api/placeholder/400/500" alt="Agent" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="agent-info">
+                            <h4 class="agent-name">John Smith</h4>
+                            <div class="agent-title">Senior Real Estate Consultant</div>
+                            <p>With over 10 years of experience in luxury properties, John specializes in high-end real estate in prime locations.</p>
+                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent 2 -->
+                <div class="col-md-4">
+                    <div class="agent-card">
+                        <div class="agent-img">
+                            <img src="/api/placeholder/400/500" alt="Agent" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="agent-info">
+                            <h4 class="agent-name">Sarah Johnson</h4>
+                            <div class="agent-title">Commercial Property Specialist</div>
+                            <p>Sarah has helped numerous businesses find their ideal commercial spaces with her in-depth market knowledge.</p>
+                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent 3 -->
+                <div class="col-md-4">
+                    <div class="agent-card">
+                        <div class="agent-img">
+                            <img src="/api/placeholder/400/500" alt="Agent" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="agent-info">
+                            <h4 class="agent-name">Michael Chen</h4>
+                            <div class="agent-title">Residential Property Expert</div>
+                            <p>Michael is passionate about helping first-time homebuyers find affordable yet quality homes in great neighborhoods.</p>
+                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">What Our Clients Say</h2>
+            <div class="row mt-5">
+                <!-- Testimonial 1 -->
+                <div class="col-md-4">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            SmartEstate helped me find my dream home in just two weeks! Their team was professional, attentive, and really understood what I was looking for.
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/api/placeholder/100/100" alt="Client" class="rounded-circle">
+                            <div class="author-info">
+                                <div class="author-name">Emma Wilson</div>
+                                <div class="author-role">Homeowner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="col-md-4">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            Selling my property through SmartEstate was a breeze. They managed everything from marketing to paperwork, and I got more than my asking price!
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/api/placeholder/100/100" alt="Client" class="rounded-circle">
+                            <div class="author-info">
+                                <div class="author-name">Robert Davis</div>
+                                <div class="author-role">Property Seller</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="col-md-4">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            As a first-time buyer, I was nervous about the process. SmartEstate guided me every step of the way, making it simple and stress-free.
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/api/placeholder/100/100" alt="Client" class="rounded-circle">
+                            <div class="author-info">
+                                <div class="author-name">Jennifer Lopez</div>
+                                <div class="author-role">First-time Buyer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p class="mb-4">Stay updated with the latest properties and real estate news</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Enter your email address">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        createChat({
+            webhookUrl: 'http://localhost:5678/webhook/0b72e49d-8553-4640-a08d-c1c6d31f1fd7/chat', initialMessages: [
+        'Hi there! 👋',
+        'My name is Zeeshan. Lets help you find your dream property!'
+    ]
+        },
+    );
+    </script>
+</body>
+</html>
+
+
+
+   </body>
+   </html>
