@@ -1,0 +1,94 @@
+{
+  "chunk_size": 25000,
+  "active_log_type": "hdfs",
+  "hdfs": {
+    "log_type": "hdfs",
+    "error_code_bonus": {
+      "ECHK1": 3,
+      "EEOF1": 2,
+      "ETIME1": 2,
+      "ECORR1": 3,
+      "EEXC1": 3,
+      "EDATA1": 3
+    },
+    "log_structure": {
+      "timestamp_format": "%Y-%m-%d %H:%M:%S",
+      "error_field": "error_type",
+      "severity_field": "severity",
+      "node_field": "node_id",
+      "message_field": "page_content"
+    },
+    "critical_errors": [
+      "checksummismatch",
+      "transferexception",
+      "dataloss",
+      "corruption"
+    ],
+    "rag_file": "rag_hdfs.json",
+    "chroma_directory": "./hdfs_chroma"
+  },
+  "android": {
+    "log_type": "android",
+    "error_code_bonus": {
+      "ECHK_ANDROID1": 3,
+      "EEOF_ANDROID1": 2,
+      "EIO_ANDROID1": 3,
+      "ECORR_ANDROID1": 3,
+      "ETIME_ANDROID1": 2,
+      "EIO_ANDROID2": 3,
+      "ECAST_ANDROID1": 3,
+      "EANR_ANDROID1": 3,
+      "ESEC_ANDROID1": 3,
+      "ENATIVE_ANDROID1": 3
+    },
+    "log_structure": {
+      "timestamp_format": "%m-%d %H:%M:%S.%f",
+      "error_field": "error_type",
+      "severity_field": "severity",
+      "node_field": "node_id",
+      "message_field": "page_content"
+    },
+    "critical_errors": [
+      "checksum verification failed",
+      "unexpected eof",
+      "ioexception encountered while destroying surface",
+      "data corruption detected",
+      "connection timeout",
+      "failed to cancel notification",
+      "cannot be cast",
+      "application not responding",
+      "permission denied accessing sensitive data",
+      "native crash detected"
+    ],
+    "rag_file": "rag_android.json",
+    "chroma_directory": "./android_chroma"
+  },
+  "healthapp": {
+    "log_type": "healthapp",
+    "error_code_bonus": {
+      "EDATA_CORRUPTION": 3,
+      "ESENSOR_FAILURE": 2,
+      "ENETWORK_ERROR": 2,
+      "EPERMISSION_DENIED": 3,
+      "EBATTERY_ISSUE": 3,
+      "ECRASH_DETECTED": 3
+    },
+    "log_structure": {
+      "timestamp_format": "%Y%m%d-%H:%M:%S:%f",
+      "error_field": "error_type",
+      "severity_field": "severity",
+      "node_field": "device_id",
+      "message_field": "page_content"
+    },
+    "critical_errors": [
+      "data corruption",
+      "sensor failure",
+      "network error",
+      "permission denied",
+      "battery issue",
+      "crash detected"
+    ],
+    "rag_file": "rag_healthapp.json",
+    "chroma_directory": "./health_app_chroma"
+  }
+}

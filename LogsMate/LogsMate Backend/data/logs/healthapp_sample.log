@@ -1,0 +1,5 @@
+20230615-12:34:56:789 [INFO] HealthApp: Starting health monitoring service
+20230615-12:34:57:123 [INFO] SensorManager: Heart rate sensor initialized
+20230615-12:34:58:456 [ERROR] SensorManager: Failed to read data from blood pressure sensor
+20230615-12:34:59:789 [WARN] DataProcessor: Abnormal heart rate detected: 150 BPM
+20230615-12:35:00:123 [INFO] HealthApp: Alert sent to user for abnormal heart rate

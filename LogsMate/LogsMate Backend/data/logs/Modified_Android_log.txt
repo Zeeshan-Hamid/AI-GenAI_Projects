@@ -1,0 +1,26 @@
+
+03-17 16:13:38.811  1702  2395 D WindowManager: printFreezingDisplayLogs opening app wtoken = AppWindowToken{9f4ef63 token=Token{a64f992 ActivityRecord{de9231d u0 com.tencent.qt.qtl/.activity.info.NewsDetailXmlActivity t761}}}, allDrawn=false, startingDisplayed=false, startingMoved=false, isRelaunching=false  
+03-17 16:13:38.819  1702  8671 D PowerManagerService: acquire lock=233570404, flags=0x1, tag="View Lock", name=com.android.systemui, ws=null, uid=10037, pid=2227  
+03-17 16:13:38.820  1702  8671 D PowerManagerService: ready=true, policy=3, wakefulness=1, wksummary=0x23, uasummary=0x1, bootcompleted=true, boostinprogress=false, waitmodeenable=false, mode=false, manual=38, auto=-1, adj=0.0, userId=0  
+03-17 16:13:38.839  1702  2113 V WindowManager: Skipping AppWindowToken{df0798e token=Token{78af589 ActivityRecord{3b04890 u0 com.tencent.qt.qtl/com.tencent.video.player.activity.PlayerActivity t761}}} -- going to hide  
+03-17 16:13:38.859  2227  2227 D TextView: visible is system.time.showampm  
+03-17 16:13:38.861  2227  2227 D TextView: mVisiblity.getValue is false  
+03-17 16:13:38.869  2227  2227 D TextView: visible is system.charge.show  
+03-17 16:13:38.871  2227  2227 D TextView: mVisiblity.getValue is false  
+
+# Introduced anomalies
+03-17 16:13:40.146  1702  2555 E PowerManagerService: ERROR: Checksum verification failed for file /system/framework/framework.jar, expected=0xABCD, got=0x1234  
+03-17 16:13:41.750  1702  1820 E DisplayPowerController: CRITICAL: Unexpected EOF while reading brightness configuration file /system/etc/brightness.conf  
+03-17 16:13:42.012  1702  2639 E WindowManager: IOException encountered while destroying surface for com.tencent.qt.qtl/.activity.info.NewsDetailXmlActivity – Resource busy  
+03-17 16:13:42.500  2227  2794 E KeyguardUpdateMonitor: Data corruption detected in SIM configuration; expected 3 entries, found 2  
+03-17 16:13:42.750  2626  2642 E PhoneInterfaceManager: ERROR: Connection timeout while fetching location data from network provider  
+03-17 16:13:43.005  1702  2105 E NotificationManager: IOException: Failed to cancel notification for com.tencent.mobileqq – stream closed  
+
+# Normal continuation
+03-17 16:13:45.307  1702  2105 D PowerManagerService: userActivityNoUpdateLocked: eventTime=261849942, event=2, flags=0x0, uid=1000  
+03-17 16:13:45.308  1702  2105 D PowerManagerService: ready=true, policy=3, wakefulness=1, wksummary=0x0, uasummary=0x1, bootcompleted=true, boostinprogress=false, waitmodeenable=false, mode=false, manual=38, auto=-1, adj=0.0, userId=0  
+03-17 16:13:45.310  2227  2227 I PhoneStatusBar: suspendAutohide  
+03-17 16:13:45.316  1702 14640 D WindowManager: interceptKeyTq keycode=4 interactive=true keyguardActive=false policyFlags=2b000002 down true canceled=false  
+03-17 16:13:45.317  1702 14640 D WindowManager: interceptKeyBeforeQueueing: key 4, result: 1  
+03-17 16:13:45.317  1702  2105 D PowerManagerService: userActivityNoUpdateLocked: eventTime=261849949, event=1, flags=0x0, uid=1000  
+03-17 16:13:45.318  1702  2105 D PowerManagerService: ready=true, policy=3, wakefulness=1, wksummary=0x0, uasummary=0x1, bootcompleted=true, boostinprogress=false, waitmodeenable=false, mode=false, manual=38, auto=-1, adj=0.0, userId=0  

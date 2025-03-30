@@ -1,0 +1,5 @@
+06-15 12:34:56.789 E/AndroidRuntime: FATAL EXCEPTION: main
+06-15 12:34:56.789 E/AndroidRuntime: Process: com.example.app, PID: 12345
+06-15 12:34:56.789 E/AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method
+06-15 12:34:56.790 E/AndroidRuntime:   at com.example.app.MainActivity.onCreate(MainActivity.java:25)
+06-15 12:34:56.790 I/Process: Sending signal. PID: 12345 SIG: 9

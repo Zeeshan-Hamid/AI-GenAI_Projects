@@ -1,0 +1,1 @@
+export type PageType = 'home' | 'upload' | 'reports' | 'visualizations' | 'knowledge' | 'settings';

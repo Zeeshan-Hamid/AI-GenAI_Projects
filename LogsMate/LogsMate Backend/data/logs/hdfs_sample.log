@@ -1,0 +1,5 @@
+2023-06-15 12:34:56 INFO dfs.DataNode: Receiving block blk_123456789
+2023-06-15 12:34:57 INFO dfs.DataNode: Received block blk_123456789 of size 67108864
+2023-06-15 12:34:58 ERROR dfs.DataNode: Checksum failed for block blk_123456789
+2023-06-15 12:34:59 WARN dfs.DataNode: Block blk_123456789 received with invalid checksum
+2023-06-15 12:35:00 INFO dfs.DataNode: Deleting block blk_123456789
